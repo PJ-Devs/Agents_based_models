@@ -1,16 +1,16 @@
 from Agent import Agent
 
 THRESHOLDS = {
-    'music_and_age': 0.1,
-    'sex_and_sports': 0.1,
-    'genre_and_occupation': 0.1,
-    'skin_color_and_religion': 0.1,
-    'political_and_music': 0.1,
-    'age_sex_and_sports': 0.1,
-    'religion_and_profession': 0.1,
-    'genre_music_and_sports': 0.1,
-    'skin_color_and_age': 0.1,
-    'political_and_religion': 0.1
+    'music_and_age': 0.5,
+    'sex_and_sports': 0.5,
+    'genre_and_occupation': 0.5,
+    'skin_color_and_religion': 0.5,
+    'political_and_music': 0.5,
+    'age_sex_and_sports': 0.5,
+    'religion_and_profession': 0.5,
+    'genre_music_and_sports': 0.5,
+    'skin_color_and_age': 0.5,
+    'political_and_religion': 0.5
 }
 
 def set_thresholds(new_thresholds: dict):
@@ -23,7 +23,8 @@ def music_and_age_compatibility(agent: Agent, nghs: list):
     The function returns True if the agent should move, and False if it should not move.
     '''
     match_probability = THRESHOLDS['music_and_age']
-    age_offset = 5
+    print('match_probability music and age', match_probability)
+    age_offset = 10
     
     # Check which neighbors are within the age offset and have the same music preference
     matching_neighbors = [ngh for ngh in nghs if abs(agent.age - ngh.age) <= age_offset and agent.music_like == ngh.music_like]
@@ -88,6 +89,8 @@ def political_position_and_music_compatibility(agent: Agent, nghs: list):
     The function returns True if the agent should move, and False if it should not move.
     '''
     match_probability = THRESHOLDS['political_and_music']
+
+    print('match_probability political and music', match_probability)
     
     # Check which neighbors has the same political position and music preference
     matching_neighbors = [ngh for ngh in nghs if agent.political_position == ngh.political_position and agent.music_like == ngh.music_like]
@@ -104,7 +107,7 @@ def age_sex_and_sports_compatibility(agent: Agent, nghs: list):
     The function returns True if the agent should move, and False if it should not move.
     '''
     match_probability = THRESHOLDS['age_sex_and_sports']
-    age_offset = 5
+    age_offset = 10
     
     # Check which neighbors are within the age offset and have the same sex and sports preference
     matching_neighbors = [ngh for ngh in nghs if abs(agent.age - ngh.age) <= age_offset and agent.sex == ngh.sex and agent.sports_like == ngh.sports_like]
@@ -195,3 +198,8 @@ def evaluate_rules(agent: Agent, nghs: list):
     return True
 
   return False
+
+def evaluate_music_political_and_age(agent: Agent, nghs: list):
+    if not music_and_age_compatibility(agent, nghs) or not political_position_and_music_compatibility(agent, nghs):
+        return False
+    return True

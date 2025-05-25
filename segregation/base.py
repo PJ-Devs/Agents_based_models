@@ -1,5 +1,5 @@
 from pylab import * 
-from rules import evaluate_rules
+from rules import evaluate_rules, evaluate_music_political_and_age
 from Agent import Agent
 from rules import set_thresholds
 
@@ -56,7 +56,7 @@ def update(r):
                 if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < r**2 and nb != ag]
   
   if len(neighbors) > 0:
-    should_move = evaluate_rules(ag, neighbors)
+    should_move = evaluate_music_political_and_age(ag, neighbors)
     
     if should_move:
       print(f"Se mueve")
