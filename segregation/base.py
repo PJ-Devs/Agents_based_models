@@ -1,7 +1,8 @@
 from pylab import * 
-from rules import evaluate_rules
+from rules import evaluate_rules, evaluate_music_political_and_age
 from Agent import Agent
 from plotting import plot_seggreations
+from rules import set_thresholds
 
 # Evolución de opiniones en jurados deliberativos
 
@@ -15,10 +16,7 @@ agents_data = {
   'political_positions': ['Left', 'Center', 'Right'],
 }
 
-n = 150  # número de agentes
-r = 0.1  # radio de vecindad
-
-def initialize():
+def initialize(n):
   global agents
   
   agents = []
@@ -46,7 +44,7 @@ def observe(iteration: int):
     axis('image')
     axis([0, 1, 0, 1])
 
-def update():
+def update(r):
   global agents
   
   # Seleccionar un agente al azar
@@ -57,7 +55,7 @@ def update():
                 if (ag.x - nb.x)**2 + (ag.y - nb.y)**2 < r**2 and nb != ag]
   
   if len(neighbors) > 0:
-    should_move = evaluate_rules(ag, neighbors)
+    should_move = evaluate_music_political_and_age(ag, neighbors)
     
     if should_move:
       # Mover el agente a una nueva posición aleatoria
@@ -73,4 +71,6 @@ initialize()
 for i in range(1000000):
   update()
 
-make_seggreation_plots()
+# pycxsimulator.GUI().start(func=[initialize, observe, update])
+
+__all__ = ['agents', 'initialize', 'update']
