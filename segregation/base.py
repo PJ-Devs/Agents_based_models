@@ -1,6 +1,7 @@
 from pylab import * 
 from rules import evaluate_rules
 from Agent import Agent
+from plotting import plot_seggreations
 
 # Evolución de opiniones en jurados deliberativos
 
@@ -9,12 +10,12 @@ agents_data = {
   'religions': ['Christian', 'Muslim', 'Jewish', 'Hindu', 'Buddhist', 'Atheist'],
   'occupations': ['Doctor', 'Engineer', 'Artist', 'Teacher', 'Scientist', 'Lawyer', 'Chef', 'Driver'],
   'skin_tones' : [ "very light", "light", "light-medium", "medium", "medium-dark", "dark", "very dark"],
-  'sports': ['Soccer', 'Basketball', 'Tennis', 'Baseball', 'Swimming', 'Cycling', 'Running', 'Hiking', 'Yoga', 'Dancing', 'Martial Arts', 'Boxing', 'Golf'],
-  'music_genres': ['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Classical', 'Country', 'Reggae', 'Blues', 'Electronic', 'Folk', 'R&B', 'Metal', 'Punk', 'Indie', 'Latin', 'Gospel', 'Soul', 'Disco'],
+  'sports': ['Soccer', 'Basketball', 'Tennis', 'Baseball', 'Swimming'],
+  'music_genres': ['Rock', 'Pop', 'Hip-Hop', 'Jazz', 'Classical'],
   'political_positions': ['Left', 'Center', 'Right'],
 }
 
-n = 1000  # número de agentes
+n = 150  # número de agentes
 r = 0.1  # radio de vecindad
 
 def initialize():
@@ -25,7 +26,7 @@ def initialize():
     ag = Agent()
     
     ag.age = randint(1, 80)
-    ag.sex = randint(0, 1)  # 0: Masculino, 1: Femenino
+    ag.sex = randint(0, 2)  # 0: Masculino, 1: Femenino
     ag.gender = choice(agents_data['genders'])
     ag.religion = choice(agents_data['religions'])
     ag.skin_color = choice(agents_data['skin_tones'])
@@ -36,14 +37,12 @@ def initialize():
     
     agents.append(ag)
 
-def observe():
+def observe(iteration: int):
     global agents
 
     cla()
     plot([ag.x for ag in agents], [ag.y for ag in agents], 'o', markersize=2)
-    title('Agentes')
-    xlabel('X')
-    ylabel('Y')
+    title(f'Iteration {iteration}')
     axis('image')
     axis([0, 1, 0, 1])
 
@@ -61,16 +60,17 @@ def update():
     should_move = evaluate_rules(ag, neighbors)
     
     if should_move:
-      print(f"Se mueve")
       # Mover el agente a una nueva posición aleatoria
-      ag.x, ag.y = random()
-    else:
-      print(f"No se mueve")
+      ag.x, ag.y = random(), random()
+
+def make_seggreation_plots():
+  global agents
+  plot_seggreations(agents)
 
 # pycxsimulator.GUI().start(func=[initialize, observe, update])
 
 initialize()
-print(agents[0].__dict__)
-observe()
-update()
-show()
+for i in range(1000000):
+  update()
+
+make_seggreation_plots()
