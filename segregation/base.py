@@ -1,6 +1,7 @@
 from pylab import * 
 from rules import evaluate_rules
 from Agent import Agent
+from rules import set_thresholds
 
 # Evolución de opiniones en jurados deliberativos
 
@@ -14,10 +15,7 @@ agents_data = {
   'political_positions': ['Left', 'Center', 'Right'],
 }
 
-n = 1000  # número de agentes
-r = 0.1  # radio de vecindad
-
-def initialize():
+def initialize(n):
   global agents
   
   agents = []
@@ -47,7 +45,7 @@ def observe():
     axis('image')
     axis([0, 1, 0, 1])
 
-def update():
+def update(r):
   global agents
   
   # Seleccionar un agente al azar
@@ -63,14 +61,11 @@ def update():
     if should_move:
       print(f"Se mueve")
       # Mover el agente a una nueva posición aleatoria
-      ag.x, ag.y = random()
+      ag.x= random()
+      ag.y= random()
     else:
       print(f"No se mueve")
 
 # pycxsimulator.GUI().start(func=[initialize, observe, update])
 
-initialize()
-print(agents[0].__dict__)
-observe()
-update()
-show()
+__all__ = ['agents', 'initialize', 'update']
