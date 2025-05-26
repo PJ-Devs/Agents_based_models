@@ -1,8 +1,7 @@
 from pylab import * 
-from rules import evaluate_rules, evaluate_music_political_and_age
+from rules import evaluate_music_political_and_age
 from Agent import Agent
 from plotting import plot_seggreations
-from rules import set_thresholds
 
 # Evolución de opiniones en jurados deliberativos
 
@@ -65,8 +64,4 @@ def make_seggreation_plots():
   global agents
   plot_seggreations(agents)
 
-# pycxsimulator.GUI().start(func=[initialize, observe, update])
-
-# pycxsimulator.GUI().start(func=[initialize, observe, update])
-
-__all__ = ['agents', 'initialize', 'update']
+__all__ = ['agents', 'initialize', 'update', 'make_seggreation_plots']
