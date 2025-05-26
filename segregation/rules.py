@@ -23,7 +23,6 @@ def music_and_age_compatibility(agent: Agent, nghs: list):
     The function returns True if the agent should move, and False if it should not move.
     '''
     match_probability = THRESHOLDS['music_and_age']
-    print('match_probability music and age', match_probability)
     age_offset = 10
     
     # Check which neighbors are within the age offset and have the same music preference
@@ -89,9 +88,6 @@ def political_position_and_music_compatibility(agent: Agent, nghs: list):
     The function returns True if the agent should move, and False if it should not move.
     '''
     match_probability = THRESHOLDS['political_and_music']
-
-    print('match_probability political and music', match_probability)
-    
     # Check which neighbors has the same political position and music preference
     matching_neighbors = [ngh for ngh in nghs if agent.political_position == ngh.political_position and agent.music_like == ngh.music_like]
     

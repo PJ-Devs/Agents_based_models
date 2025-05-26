@@ -67,10 +67,6 @@ def make_seggreation_plots():
 
 # pycxsimulator.GUI().start(func=[initialize, observe, update])
 
-initialize()
-for i in range(1000000):
-  update()
-
 # pycxsimulator.GUI().start(func=[initialize, observe, update])
 
 __all__ = ['agents', 'initialize', 'update']
